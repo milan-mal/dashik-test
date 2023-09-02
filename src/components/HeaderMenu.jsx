@@ -1,4 +1,8 @@
 import React from 'react'
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
 
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
@@ -12,6 +16,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+
+import TestsPage from './TestsPage'
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -103,15 +109,19 @@ export default function HeaderMenu() {
             </Transition>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-          Tests
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </a>
+          <Router>
+            <div className="hidden lg:flex lg:gap-x-12" >
+              <Link to="/" className="text-sm font-semibold leading-6 text-gray-900" >Tests</Link>
+              <Link to="/notes" className="text-sm font-semibold leading-6 text-gray-900" >Marketplace</Link>
+              <Link to="/users" className="text-sm font-semibold leading-6 text-gray-900" >Company</Link>
+            </div>
+
+            <Routes>
+              <Route path="/tests" element={<TestsPage />} />
+              <Route path="/" />
+              <Route path="/" />
+            </Routes>
+          </Router>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
