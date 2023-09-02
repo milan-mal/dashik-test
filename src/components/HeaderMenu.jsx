@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
@@ -102,7 +104,7 @@ export default function HeaderMenu() {
           </Popover>
 
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
+          Tests
           </a>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Marketplace
