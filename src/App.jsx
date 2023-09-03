@@ -1,14 +1,19 @@
 import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
 import HeaderMenu from './components/HeaderMenu'
-import HeroSection from './components/HeroSection'
+import TestsPage from './components/pages/TestsPage'
+import HomePage from './components/pages/HomePage'
 
 function App() {
-
   return (
     <div className='flex flex-col items-center' >
       <HeaderMenu />
-      <HeroSection />
+      <Routes>
+        <Route path="/" index element={<HomePage />} />
+        <Route path="/tests" element={<TestsPage />} />
+        <Route path="/" />
+      </Routes>
     </div>
   )
 }
