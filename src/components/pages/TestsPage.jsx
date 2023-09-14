@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function TestsPage() {
   return (
-    <div className="bg-white">
-      <div className="relative isolate px-6 pt-14 lg:px-8">
+    <div className="bg-white w-full">
+      <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-16">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -16,11 +16,11 @@ export default function TestsPage() {
             }}
           />
         </div>
-        <div className="flex flex-row flex-none flex-nowrap mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className='basis-48'>
+        <div className="w-full flex flex-row sm:py-32 lg:py-32">
+          <div className='grow basis-48'>
             Text relevant to the test questions goes here.
           </div>
-          <div className='basis-96'>
+          <div className='grow basis-96'>
             Test questions go here.
           </div>
         </div>
