@@ -1,9 +1,10 @@
 import React from 'react'
+import TestQuestion from '../TestQuestion'
 
 export default function TestsPage() {
   return (
     <div className="bg-white w-full">
-      <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-16">
+      <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-36">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -16,12 +17,13 @@ export default function TestsPage() {
             }}
           />
         </div>
-        <div className="w-full flex flex-row sm:py-32 lg:py-32">
+        <div className="w-full flex flex-row sm:py-24 lg:py-32">
           <div className='grow basis-48'>
-            Text relevant to the test questions goes here.
+            <h2>Text headline for the text</h2>
+            <p>Text relevant to the test questions goes here.</p>
           </div>
           <div className='grow basis-96'>
-            Test questions go here.
+            <TestQuestion />
           </div>
         </div>
         <div
