@@ -48,7 +48,7 @@ export default function TestQuestion() {
       <p className="pl-16 pb-3 text-base text-gray-700" >{questionDescription}</p>
       <ul role="list" className="divide-y divide-gray-100">
         {answers.map((answer) => (
-          <li key={answer.answerDescription} className="flex justify-between gap-x-6 py-3">
+          <li key={answer.answerDescription} className="flex justify-between gap-x-6 py-2">
             <div className="flex min-w-0 gap-x-4">
               <div className="h-12 w-12 flex-none flex items-center justify-center text-xl font-bold text-gray-500" >{answer.answerId}</div>
               <div className="min-w-0 flex-auto">

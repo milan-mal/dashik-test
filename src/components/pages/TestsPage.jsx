@@ -17,12 +17,12 @@ export default function TestsPage() {
             }}
           />
         </div>
-        <div className="w-full flex flex-row sm:py-24 lg:py-32">
-          <div className='grow basis-48'>
+        <div className='w-full flex flex-row sm:py-24 lg:py-32 divide-x divide-gray-700'>
+          <div className='grow basis-32'>
             <h2>Text headline for the text</h2>
             <p>Text relevant to the test questions goes here.</p>
           </div>
-          <div className='grow basis-96'>
+          <div className='grow basis-96 px-10'>
             <TestQuestion />
           </div>
         </div>

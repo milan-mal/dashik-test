@@ -6,7 +6,4 @@
   h2 {
     @apply text-2xl font-semibold tracking-wide pt-6 pb-4;
   }
-  p {
-    @apply pb-2;
-  }
 }
