@@ -4,6 +4,6 @@
 
 @layer base {
   h2 {
-    @apply text-2xl font-semibold tracking-wide pt-6 pb-4;
+    @apply text-xl font-semibold tracking-wide pt-6 pb-4;
   }
 }
