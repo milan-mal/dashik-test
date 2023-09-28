@@ -1,5 +1,6 @@
 import React from 'react'
 import TestQuestion from '../TestQuestion'
+import InputField from '../InputField'
 
 export default function TestsPage() {
   return (
@@ -24,6 +25,7 @@ export default function TestsPage() {
           </div>
           <div className='grow basis-96 px-10'>
             <TestQuestion />
+            <InputField />
           </div>
         </div>
         <div
