@@ -1,4 +1,8 @@
 import express from 'express'
 const app = express()
+import middleware from './utils/middleware.js'
+// import logger from './utils/logger.js'
 
-module.exports = app
+app.use(middleware.requestLogger)
+
+export default app
