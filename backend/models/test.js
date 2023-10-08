@@ -1,7 +1,21 @@
 import mongoose from 'mongoose'
 
 const testSchema = new mongoose.Schema({
-  testName: String
+  testName: String,
+  questions: [
+    { 
+      questionId: Number,
+      questionName: String,
+      questionDescription: String,
+      answers: [
+        {
+          answerId: Number,
+          answerName: String,
+          answerDescription: String
+        },
+      ]
+    }
+  ]
 })
 
 testSchema.set('toJSON', {
