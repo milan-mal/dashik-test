@@ -27,6 +27,8 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "globalTeardown": "./tests/teardown.js",
+    "testMatch": ["**/tests/**/*.test.js"],
     "setupFilesAfterEnv": [
       "./config.js"
     ]

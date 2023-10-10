@@ -1,10 +1,11 @@
-import express, { response } from 'express';
-const testRouter = express.Router();
-
+import express from 'express';
 import Test from '../models/test.js'
 
-testRouter.get('/', (req, res) => {
-  res.status(200).send('Hello World from Dashik!')
+const testRouter = express.Router();
+
+testRouter.get('/', async (req, res) => {
+  const tests = await Test.find({})
+  res.status(200).json(tests)
 })
 
 export default testRouter

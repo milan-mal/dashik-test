@@ -11,9 +11,16 @@ beforeEach(async() => {
   await Test.insertMany(helper.initialTests)
 })
 
-test('tests are returned as json', async () => {
-  await api
-    .get('api/tests')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+describe('Checking initial tests:', () => {
+  test('tests are returned as json', async () => {
+    await api
+      .get('/api/tests')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('all initial tests are returned', async () => {
+    const response = await api.get('/api/tests')
+    expect(response.body).toHaveLength(helper.initialTests.length)
+  })
 })

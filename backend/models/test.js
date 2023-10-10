@@ -26,4 +26,4 @@ testSchema.set('toJSON', {
   }
 })
 
-export default testSchema
+export default mongoose.model('Test', testSchema)
