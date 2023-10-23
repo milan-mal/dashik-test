@@ -24,3 +24,83 @@ describe('Checking initial tests:', () => {
     expect(response.body).toHaveLength(helper.initialTests.length)
   })
 })
+
+describe('Adding a test:', () => {
+  test('succeeds with valid data', async () => {
+    const newTest = [
+      {
+        testName: 'Second test',
+        questions: [
+          {
+            questionId: 1,
+            questionDescription: 'Question description 1.',
+            answers: [
+              {
+                answerId: 1,
+                answerName: 'Answer name 1',
+                answerDescription: 'Answer description 1.'
+              },
+              {
+                answerId: 2,
+                answerName: 'Answer name 2',
+                answerDescription: 'Answer description 2.'
+              },
+              {
+                answerId: 3,
+                answerName: 'Answer name 3',
+                answerDescription: 'Answer description 3.'
+              },
+              {
+                answerId: 4,
+                answerName: 'Answer name 4',
+                answerDescription: 'Answer description 4.'
+              },
+            ]
+          },
+          {
+            questionName: 'Question name 2',
+            questionDescription: 'Question description 2.',
+            answers: [
+              {
+                answerId: 1,
+                answerName: 'Answer name 1',
+                answerDescription: 'Answer description 1.'
+              },
+              {
+                answerId: 2,
+                answerName: 'Answer name 2',
+                answerDescription: 'Answer description 2.'
+              },
+              {
+                answerId: 3,
+                answerName: 'Answer name 3',
+                answerDescription: 'Answer description 3.'
+              },
+              {
+                answerId: 4,
+                answerName: 'Answer name 4',
+                answerDescription: 'Answer description 4.'
+              },
+            ]
+          },
+        ]
+      }
+    ]  
+  })
+
+  test('fails with invalid data', async () => {
+    await api
+      .post('/api/tests')
+      .send(newTest)
+      .expect(400)
+    
+      const testsAtEnd = await helper.testsInDb()
+      expect(testsAtEnd).toHaveLength( helper.initialTests.length )
+  })
+})
+
+describe('Getting one specific test:', () => {
+  test('succeeds with a valid id', async () => {
+    
+  })
+})

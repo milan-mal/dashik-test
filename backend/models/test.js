@@ -4,8 +4,14 @@ const testSchema = new mongoose.Schema({
   testName: String,
   questions: [
     { 
-      questionId: Number,
-      questionName: String,
+      questionId: {
+        type: Number,
+        required: true
+      },
+      questionName: {
+        type: String,
+        required: true
+      },
       questionDescription: String,
       answers: [
         {
