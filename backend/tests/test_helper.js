@@ -62,12 +62,30 @@ const initialTests = [
   }
 ]
 
+const testToBeRemoved = {
+    testName: 'Test to be removed',
+    questions: [
+      {
+        questionId: 1,
+        questionName: 'Question name 1',
+      },
+    ]
+  }
+
 const testsInDb = async () => {
   const tests = await Test.find({})
   return tests.map(test => test.toJSON())
 }
 
+const invalidIdTest = async () => {
+  const test = new Test(testToBeRemoved)
+  await test.save()
+  await test.deleteOne()
+  return test._id.toString()
+}
+
 export default {
   initialTests,
-  testsInDb
+  testsInDb,
+  invalidIdTest
 }

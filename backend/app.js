@@ -3,10 +3,10 @@ const app = express()
 import cors from 'cors'
 import mongoose from 'mongoose'
 
-import middleware from './utils/middleware.js'
-import logger from './utils/logger.js'
 import config from './utils/config.js'
+import logger from './utils/logger.js'
 import testRouter from './controllers/tests.js'
+import middleware from './utils/middleware.js'
 
 mongoose.set('strictQuery', false)
 
@@ -25,6 +25,7 @@ app.use(middleware.requestLogger)
 
 app.use('/api/tests', testRouter)
 
-app.use(middleware.requestLogger)
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 export default app

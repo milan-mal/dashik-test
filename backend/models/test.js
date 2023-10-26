@@ -1,7 +1,10 @@
 import mongoose from 'mongoose'
 
 const testSchema = new mongoose.Schema({
-  testName: String,
+  testName: {
+    type: String,
+    required: true
+  },
   questions: [
     { 
       questionId: {

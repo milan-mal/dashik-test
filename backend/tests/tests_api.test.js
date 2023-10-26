@@ -189,4 +189,18 @@ describe('Getting one specific test:', () => {
 
     expect(resultTest.body.questions).toHaveLength( testToView.questions.length )
   })
+
+  test('fails with statuscode 404 if a test does not exist', async () => {
+    const validNonexistingId = await helper.invalidIdTest()
+    await api
+      .get(`/api/tests/${validNonexistingId}`)
+      .expect(404)
+  })
+
+  test('fails with statuscode 400 if Id is invalid', async () => {
+    const invalidId = '653926ee4594253da332af0'
+    await api
+      .get(`/api/tests/${invalidId}`)
+      .expect(400)
+  })
 })
