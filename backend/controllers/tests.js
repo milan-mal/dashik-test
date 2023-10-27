@@ -8,21 +8,16 @@ testRouter.get('/', async (req, res) => {
   res.status(200).json(tests)
 })
 
-testRouter.get('/:id', async (req, res) =>  {
-  const test = await Test.findById(req.params.id)
-    .then(() => res.json(test))
-    .catch((error) => { // TODO: clean up error handling
-      if ( error.name === 'CastError' ){
-        return res.status(400).send({ error: 'malformatted id' })
+testRouter.get('/:id', async (req, res, next) =>  {
+  await Test.findById(req.params.id)
+    .then((test) => {
+      if( test ){
+        res.json(test)
       } else {
-        logger.error(error.message)
+        res.status(404).end()
       }
     })
-  // if( test ){
-  //   res.json(test)
-  // } else {
-  //   res.status(404).end()
-  // }
+    .catch( error => next(error))
 })
 
 export default testRouter
