@@ -1,7 +1,23 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import TestQuestion from '../TestQuestion'
+import testService from '../../services/tests'
 
 export default function TestsPage() {
+  const [currentTest, setCurrentTest] = useState({})
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+
+  const initialTestId = '653c1b5d9043071e5085d008'
+
+  useEffect(() => {
+    testService
+      .getTest(initialTestId)
+      .then(fetchedTest => setCurrentTest(fetchedTest))
+  }, [])
+
+  const currentQuestion = currentTest.questions[currentQuestionIndex]
+  console.log('currentQuestion', currentQuestion)
+
   return (
     <div className="bg-white w-full">
       <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-20">
@@ -17,13 +33,16 @@ export default function TestsPage() {
             }}
           />
         </div>
-        <div className='w-full flex flex-row sm:py-24 lg:py-32 divide-x divide-gray-700'>
-          <div className='grow basis-1 px-6'>
-            <h2>Text headline for the text</h2>
-            <p className='text-sm'>Text relevant to the test questions goes here.</p>
-          </div>
-          <div className='grow basis-1 px-6'>
-            <TestQuestion />
+        <div className="w-full flex flex-col">
+          <h1 className='px-6 sm:py-3 sm:pt-12 lg:py-6 lg:pt-16'>{currentTest.testName}</h1>
+          <div className='w-full flex flex-row sm:py-5 lg:py-10 divide-x divide-gray-700'>
+            <div className='grow basis-1 px-6'>
+              <h2 className='pb-4'>Text headline for the text</h2>
+              <p className='text-sm'>Text relevant to the test questions goes here.</p>
+            </div>
+            <div className='grow basis-1 px-6'>
+              <TestQuestion questionData={currentQuestion} />
+            </div>
           </div>
         </div>
         <div

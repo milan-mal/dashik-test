@@ -38,14 +38,15 @@ const answers = [
   },
 ]
 
-const questionName = 'How do you say "Ahoj" in English'
-const questionDescription = 'Please anwer the question.'
+// MOCK:
+// const questionName = 'How do you say "Ahoj" in English'
+// const questionDescription = 'Please anwer the question.'
 
-export default function TestQuestion() {
+export default function TestQuestion({ questionData }) {
   return (
     <div className="max-w-md" >
-      <p className="pl-16 text-lg font-semibold text-gray-900" >{questionName}</p>
-      <p className="pl-16 pb-3 text-sm text-gray-700" >{questionDescription}</p>
+      <h2 className="pl-16 pb-2 text-base font-semibold text-gray-900" >{questionData.questionName}</h2>
+      <p className="pl-16 pb-3 text-sm text-gray-700" >{questionData.questionDescription}</p>
       <ul role="list" className="divide-y divide-gray-100">
         {answers.map((answer) => (
           <li key={answer.answerDescription} className="flex justify-between gap-x-6 py-2">
@@ -62,3 +63,7 @@ export default function TestQuestion() {
     </div>
   )
 }
+
+// TestQuestion.propTypes = {
+//   questionData: React.ReactPropTypes.string.isRequired,
+// }
