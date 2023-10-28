@@ -45,15 +45,15 @@ export default function TestQuestion() {
   return (
     <div className="max-w-md" >
       <p className="pl-16 text-lg font-semibold text-gray-900" >{questionName}</p>
-      <p className="pl-16 pb-3 text-base text-gray-700" >{questionDescription}</p>
+      <p className="pl-16 pb-3 text-sm text-gray-700" >{questionDescription}</p>
       <ul role="list" className="divide-y divide-gray-100">
         {answers.map((answer) => (
           <li key={answer.answerDescription} className="flex justify-between gap-x-6 py-2">
-            <div className="flex min-w-0 gap-x-4">
-              <div className="h-12 w-12 flex-none flex items-center justify-center text-xl font-bold text-gray-500" >{answer.answerId}</div>
+            <div className="flex items-center min-w-0 gap-x-3">
+              <div className="h-10 w-10 flex-none flex items-center justify-center text-xl font-bold text-gray-500" >{answer.answerId}</div>
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900">{answer.answerText}</p>
-                <p className="mt-1 truncate text-xs leading-5 text-gray-700">{answer.answerDescription}</p>
+                <p className="truncate text-xs leading-5 text-gray-700">{answer.answerDescription}</p>
               </div>
             </div>
           </li>

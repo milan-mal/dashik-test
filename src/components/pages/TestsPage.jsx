@@ -4,7 +4,7 @@ import TestQuestion from '../TestQuestion'
 export default function TestsPage() {
   return (
     <div className="bg-white w-full">
-      <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-36">
+      <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-20">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -18,11 +18,11 @@ export default function TestsPage() {
           />
         </div>
         <div className='w-full flex flex-row sm:py-24 lg:py-32 divide-x divide-gray-700'>
-          <div className='grow basis-32'>
+          <div className='grow basis-36 px-6'>
             <h2>Text headline for the text</h2>
-            <p>Text relevant to the test questions goes here.</p>
+            <p className='text-sm'>Text relevant to the test questions goes here.</p>
           </div>
-          <div className='grow basis-96 px-10'>
+          <div className='grow basis-96 px-6'>
             <TestQuestion />
           </div>
         </div>
