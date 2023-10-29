@@ -42,6 +42,11 @@ const answers = [
 // const questionName = 'How do you say "Ahoj" in English'
 // const questionDescription = 'Please anwer the question.'
 
+/**
+ * Represents a single question with answers in a test.
+ * @param {string} {questionData} // TODO: probably needs to be changed to an "question object"
+ * @returns {any}
+ */
 export default function TestQuestion({ questionData }) {
   return (
     <div className="max-w-md" >
