@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const answers = [
   {
@@ -67,6 +68,10 @@ export default function TestQuestion({ questionData }) {
       </ul>
     </div>
   )
+}
+
+TestQuestion.propTypes = {
+  questionData: PropTypes.string,
 }
 
 // TestQuestion.propTypes = {

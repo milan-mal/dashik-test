@@ -5,19 +5,37 @@ import testService from '../../services/tests'
 
 export default function TestsPage() {
   const [currentTest, setCurrentTest] = useState({})
+  // TODO: implement paging of questions and remove the disabling of the eslint check
+  // eslint-disable-next-line no-unused-vars
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
   const initialTestId = '653c1b5d9043071e5085d008'
 
   useEffect(() => {
-    testService
-      .getTest(initialTestId)
-      .then(fetchedTest => setCurrentTest(fetchedTest))
+    setTimeout(() => {
+      testService
+        .getTest(initialTestId)
+        .then(fetchedTest => setCurrentTest(fetchedTest))
+    }, 1500)
   }, [])
 
-  const currentQuestion = currentTest.questions[currentQuestionIndex]
-  console.log('currentQuestion', currentQuestion)
+  const spinner = () => {
+    return(
+      <div className="flex justify-center h-full">
+        <div className="w-16 h-16 border-t-4 border-fuchsia-800 border-solid rounded-full animate-spin"></div>
+      </div>
+    )
+  }
 
+  const getCurrentQuestion = () => {
+    if( currentTest.questions ){
+      const currentQuestion = currentTest.questions[currentQuestionIndex]
+      return <TestQuestion questionData={currentQuestion} />
+    } else {
+      return spinner()
+    }
+  }
+  
   return (
     <div className="bg-white w-full">
       <div className="w-full flex flex-row justify-center relative isolate p-6 pt-14 lg:px-20">
@@ -41,7 +59,7 @@ export default function TestsPage() {
               <p className='text-sm'>Text relevant to the test questions goes here.</p>
             </div>
             <div className='grow basis-1 px-6'>
-              <TestQuestion questionData={currentQuestion} />
+              {getCurrentQuestion()}
             </div>
           </div>
         </div>
