@@ -43,11 +43,13 @@ const answers = [
 // const questionName = 'How do you say "Ahoj" in English'
 // const questionDescription = 'Please anwer the question.'
 
+
 /**
- * Represents a single question with answers in a test.
- * @param {string} {questionData} // TODO: probably needs to be changed to an "question object"
+ * Description
+ * @param {object} {questionData}
  * @returns {any}
  */
+
 export default function TestQuestion({ questionData }) {
   return (
     <div className="max-w-md" >
@@ -71,9 +73,5 @@ export default function TestQuestion({ questionData }) {
 }
 
 TestQuestion.propTypes = {
-  questionData: PropTypes.string,
+  questionData: PropTypes.object.isRequired,
 }
-
-// TestQuestion.propTypes = {
-//   questionData: React.ReactPropTypes.string.isRequired,
-// }
