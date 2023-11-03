@@ -2,20 +2,27 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import TestQuestion from '../TestQuestion'
 import testService from '../../services/tests'
+import Pagination from '../Pagination'
 
 export default function TestsPage() {
   const [currentTest, setCurrentTest] = useState({})
   // TODO: implement paging of questions and remove the disabling of the eslint check
   // eslint-disable-next-line no-unused-vars
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [questionCount, setQuestionCount] = useState(0)
 
   const initialTestId = '653c1b5d9043071e5085d008'
 
   useEffect(() => {
+    console.log('useEffect() started')
     setTimeout(() => {
       testService
         .getTest(initialTestId)
-        .then(fetchedTest => setCurrentTest(fetchedTest))
+        .then(fetchedTest => {
+          setCurrentTest(fetchedTest)
+          setQuestionCount(Object.keys(fetchedTest.questions).length)
+        }
+        )
     }, 1500)
   }, [])
 
@@ -28,12 +35,18 @@ export default function TestsPage() {
   }
 
   const getCurrentQuestion = () => {
+    console.log('getCurrentQuestion() started')
     if( currentTest.questions ){
       const currentQuestion = currentTest.questions[currentQuestionIndex]
       return <TestQuestion questionData={currentQuestion} />
     } else {
       return spinner()
     }
+  }
+
+  const handleChangeQuestion = (newQuestionIndex) => {
+    console.log('handleChangeQuestion() started')
+    setCurrentQuestionIndex(newQuestionIndex)
   }
   
   return (
@@ -59,6 +72,7 @@ export default function TestsPage() {
               <p className='text-sm'>Text relevant to the test questions goes here.</p>
             </div>
             <div className='grow basis-1 px-6'>
+              <Pagination questionCount={questionCount} currentQuestionIndex={currentQuestionIndex} handleChangeQuestion={handleChangeQuestion} />
               {getCurrentQuestion()}
             </div>
           </div>
