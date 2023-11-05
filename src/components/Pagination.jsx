@@ -104,7 +104,7 @@ export default function Pagination({ questionCount, currentQuestionIndex, handle
         </div>
         <div>
           <p className="text-sm text-center text-gray-700">
-            Showing question <span className="font-medium">{currentQuestionIndex + 1}</span> of{' '}
+            Showing the question <span className="font-medium">{currentQuestionIndex + 1}</span> of{' '}
             <span className="font-medium">{questionCount}</span> questions.
           </p>
         </div>

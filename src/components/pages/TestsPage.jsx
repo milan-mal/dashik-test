@@ -84,6 +84,14 @@ export default function TestsPage() {
             </div>
             <div className='grow basis-1 px-6'>
               {getCurrentQuestion()}
+              <div className='w-full grid justify-center p-10' >
+                <button
+                  type='button'
+                  onClick={() => {}}
+                  className='px-4 py-2 rounded-md border border-solid border-gray-200 bg-indigo-50 text-indigo-600 font-semibold leading-5
+                  hover:bg-indigo-600 hover:text-white'
+                >Confirm my answers</button>
+              </div>
             </div>
           </div>
         </div>
