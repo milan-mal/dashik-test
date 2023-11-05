@@ -54,7 +54,8 @@ export default function TestQuestion({ questionData, handleChangeAnswer, selecte
           <a 
             key={answer.answerId} 
             href='#' 
-            onClick={() => {handleChangeAnswer(questionData.questionId, answer.answerId)}} className={`flex justify-between gap-x-6 py-2 ${
+            onClick={() => {handleChangeAnswer(questionData.questionId, answer.answerId)}}
+            className={`flex justify-between gap-x-6 py-2 ${
               selectedAnswerId === answer.answerId
                 ? 'bg-indigo-600 text-white'
                 : 'text-gray-900 hover:bg-gray-50'
@@ -77,5 +78,5 @@ export default function TestQuestion({ questionData, handleChangeAnswer, selecte
 TestQuestion.propTypes = {
   questionData: PropTypes.object.isRequired,
   handleChangeAnswer: PropTypes.func.isRequired,
-  selectedAnswerId: PropTypes.number.isRequired,
+  selectedAnswerId: PropTypes.number,
 }

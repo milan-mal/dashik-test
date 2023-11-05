@@ -10,12 +10,11 @@ export default function TestsPage() {
   // eslint-disable-next-line no-unused-vars
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [questionCount, setQuestionCount] = useState(0)
-  const [selectedAnswerId, setSelectedAnswerId] = useState(0)
+  const [selectedAnswers, setSelectedAnswers] = useState({})
 
   const initialTestId = '653c1b5d9043071e5085d008'
 
   useEffect(() => {
-    console.log('useEffect() started')
     setTimeout(() => {
       testService
         .getTest(initialTestId)
@@ -36,13 +35,12 @@ export default function TestsPage() {
   }
 
   const getCurrentQuestion = () => {
-    console.log('getCurrentQuestion() started')
     if( currentTest.questions ){
       const currentQuestion = currentTest.questions[currentQuestionIndex]
       return (
         <>
           <Pagination questionCount={questionCount} currentQuestionIndex={currentQuestionIndex} handleChangeQuestion={handleChangeQuestion} />
-          <TestQuestion questionData={currentQuestion} handleChangeAnswer={handleChangeAnswer} selectedAnswerId={selectedAnswerId} />
+          <TestQuestion questionData={currentQuestion} handleChangeAnswer={handleChangeAnswer} selectedAnswerId={selectedAnswers[currentQuestion.questionId]} />
         </>
       )
     } else {
@@ -51,13 +49,15 @@ export default function TestsPage() {
   }
 
   const handleChangeQuestion = (newQuestionIndex) => {
-    console.log('handleChangeQuestion() started')
     setCurrentQuestionIndex(newQuestionIndex)
   }
 
   const handleChangeAnswer = (selectedQuestionId, selectedAnswerId) => {
-    console.log('handleChangeAnswer() started')
-    setSelectedAnswerId(selectedAnswerId)
+    selectedAnswers[selectedQuestionId] = selectedAnswerId
+    setSelectedAnswers((prevSelectedAnswers) => ({
+      ...prevSelectedAnswers, [selectedQuestionId]: selectedAnswerId,
+    }))
+    console.log('selectedAnswers', JSON.stringify(selectedAnswers))
   }
   
   return (
