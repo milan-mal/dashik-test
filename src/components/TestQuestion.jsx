@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+
 // MOCK:
 // const answers = [
 //   {
@@ -43,22 +44,30 @@ import PropTypes from 'prop-types'
 // const questionName = 'How do you say "Ahoj" in English'
 // const questionDescription = 'Please anwer the question.'
 
-export default function TestQuestion({ questionData }) {
+export default function TestQuestion({ questionData, handleChangeAnswer, selectedAnswerId }) {
   return (
     <div className="max-w-md" >
       <h2 className="pl-16 pb-2 text-base font-semibold text-gray-900" >{questionData.questionName}</h2>
       <p className="pl-16 pb-3 text-sm text-gray-700" >{questionData.questionDescription}</p>
       <ul role="list" className="divide-y divide-gray-100">
         {questionData.answers.map((answer) => (
-          <li key={answer.answerId} className="flex justify-between gap-x-6 py-2">
+          <a 
+            key={answer.answerId} 
+            href='#' 
+            onClick={() => {handleChangeAnswer(questionData.questionId, answer.answerId)}} className={`flex justify-between gap-x-6 py-2 ${
+              selectedAnswerId === answer.answerId
+                ? 'bg-indigo-600 text-white'
+                : 'text-gray-900 hover:bg-gray-50'
+            }`}
+          >
             <div className="flex items-center min-w-0 gap-x-3">
-              <div className="h-10 w-10 flex-none flex items-center justify-center text-xl font-bold text-gray-500" >{String.fromCharCode(answer.answerId + 64)}</div>
+              <div className="h-10 w-10 flex-none flex items-center justify-center text-xl font-bold text-gray-400" >{String.fromCharCode(answer.answerId + 64)}</div>
               <div className="min-w-0 flex-auto">
-                <p className="text-sm font-semibold leading-6 text-gray-900">{answer.answerName}</p>
-                <p className="truncate text-xs leading-5 text-gray-700">{answer.answerDescription}</p>
+                <p className="text-sm font-semibold leading-6">{answer.answerName}</p>
+                <p className="truncate text-xs leading-5">{answer.answerDescription}</p>
               </div>
             </div>
-          </li>
+          </a>
         ))}
       </ul>
     </div>
@@ -67,4 +76,6 @@ export default function TestQuestion({ questionData }) {
 
 TestQuestion.propTypes = {
   questionData: PropTypes.object.isRequired,
+  handleChangeAnswer: PropTypes.func.isRequired,
+  selectedAnswerId: PropTypes.number.isRequired,
 }

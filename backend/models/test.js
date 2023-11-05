@@ -5,6 +5,12 @@ const testSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  textsToRead: [
+    {
+      textId: Number,
+      textToRead: String
+    }
+  ],
   questions: [
     { 
       questionId: {

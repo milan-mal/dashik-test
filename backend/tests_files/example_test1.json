@@ -1,5 +1,11 @@
 {
   "testName": "English Grammar Test",
+  "textsToRead": [
+    {
+      "textId": 1,
+      "textToRead": "Learning other languages is not just a skill; it's a transformative journey that enriches one's life in countless ways. At its core, language learning fosters effective communication, enabling individuals to connect with people from diverse backgrounds, fostering empathy and understanding. But its benefits extend far beyond that. First and foremost, multilingualism opens doors to new cultures and experiences. It allows you to explore literature, music, films, and art that would otherwise remain inaccessible. It immerses you in the customs and traditions of different societies, providing a broader perspective on the world. Moreover, learning other languages is a cognitive exercise that enhances problem-solving skills, memory, and creativity. It challenges the brain to adapt to different grammatical structures and vocabulary, fostering mental flexibility. Bilingual or multilingual individuals often find it easier to switch between tasks and think critically. In an increasingly globalized world, multilingualism is an asset in the job market. It makes you more marketable to employers looking to expand their reach and engage with international clients. It also facilitates travel, making your journeys more enjoyable and meaningful as you can interact with locals and gain deeper insights into their culture. In summary, learning other languages is a passport to a world of opportunities. It's a journey of personal growth, cognitive enrichment, and cultural immersion. It bridges gaps, fosters understanding, and opens doors, ultimately making you a more well-rounded, adaptable, and globally engaged individual. So, don't hesitate to embark on the adventure of language learning; the benefits are boundless."
+    }
+  ],
   "questions": [
     {
       "questionId": 1,
