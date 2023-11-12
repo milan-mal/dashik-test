@@ -11,6 +11,7 @@ export default function TestsPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [questionCount, setQuestionCount] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState({})
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
 
   const initialTestId = '653c1b5d9043071e5085d008'
 
@@ -26,10 +27,30 @@ export default function TestsPage() {
     }, 1500)
   }, [])
 
-  const spinner = () => {
+  useEffect(() => {
+    // Check if all questions are answered whenever selectedAnswers or currentQuestionIndex changes
+    const answeredQuestionsCount = Object.keys(selectedAnswers).length
+    setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
+  }, [selectedAnswers, questionCount])
+
+  const Spinner = () => {
     return(
       <div className="flex justify-center h-full">
         <div className="w-16 h-16 border-t-4 border-fuchsia-800 border-solid rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+
+  const ButtonConfirm = () => {
+    return(
+      <div className='w-full grid justify-center p-10' >
+        <button
+          type='button'
+          onClick={() => {}}
+          className='px-4 py-2 rounded-md border border-solid border-gray-200 bg-white text-indigo-600 font-semibold leading-5
+          hover:bg-indigo-600 hover:text-white disabled:text-gray-500 disabled:bg-gray-100'
+          disabled={!allQuestionsAnswered}
+        >Confirm my answers</button>
       </div>
     )
   }
@@ -41,10 +62,11 @@ export default function TestsPage() {
         <>
           <Pagination questionCount={questionCount} currentQuestionIndex={currentQuestionIndex} handleChangeQuestion={handleChangeQuestion} />
           <TestQuestion questionData={currentQuestion} handleChangeAnswer={handleChangeAnswer} selectedAnswerId={selectedAnswers[currentQuestion.questionId]} />
+          <ButtonConfirm />
         </>
       )
     } else {
-      return spinner()
+      return <Spinner />
     }
   }
 
@@ -84,14 +106,6 @@ export default function TestsPage() {
             </div>
             <div className='grow basis-1 px-6'>
               {getCurrentQuestion()}
-              <div className='w-full grid justify-center p-10' >
-                <button
-                  type='button'
-                  onClick={() => {}}
-                  className='px-4 py-2 rounded-md border border-solid border-gray-200 bg-indigo-50 text-indigo-600 font-semibold leading-5
-                  hover:bg-indigo-600 hover:text-white'
-                >Confirm my answers</button>
-              </div>
             </div>
           </div>
         </div>
