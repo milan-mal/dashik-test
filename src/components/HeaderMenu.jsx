@@ -16,6 +16,8 @@ import ChevronDownIcon from '../assets/chevronDownIcon.svg?react'
 import PlayCircleIcon from '../assets/playCircleIcon.svg?react'
 import PhoneIcon from '../assets/phoneIcon.svg?react'
 
+import { signInWithGoogle } from '../services/firebase'
+
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
   { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
@@ -113,7 +115,10 @@ export default function HeaderMenu() {
           </div>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a
+            href="#"
+            className="text-sm font-semibold leading-6 text-gray-900"
+            onClick={signInWithGoogle}>
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
