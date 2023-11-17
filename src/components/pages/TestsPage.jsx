@@ -6,11 +6,9 @@ import Pagination from '../Pagination'
 
 export default function TestsPage() {
   const [currentTest, setCurrentTest] = useState({})
-  // TODO: implement paging of questions and remove the disabling of the eslint check
-  // eslint-disable-next-line no-unused-vars
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [questionCount, setQuestionCount] = useState(0)
-  const [selectedAnswers, setSelectedAnswers] = useState({})
+  const [selectedAnswers, setSelectedAnswers] = useState({})  //TODO: change to localStorage
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
 
   const initialTestId = '653c1b5d9043071e5085d008'
@@ -79,6 +77,7 @@ export default function TestsPage() {
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers, [selectedQuestionId]: selectedAnswerId,
     }))
+    localStorage.setItem('selectedAnswers', JSON.stringify(selectedAnswers))
     console.log('selectedAnswers', JSON.stringify(selectedAnswers))
   }
   

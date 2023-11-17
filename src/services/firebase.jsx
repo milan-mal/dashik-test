@@ -22,6 +22,7 @@ const provider = new GoogleAuthProvider()
 export const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
+      console.log(result)
       // const credential = GoogleAuthProvider.credentialFromResult(result)
       // const token = credential.accessToken
       // const user = result.user
@@ -44,12 +45,6 @@ export const signOutGoogle = () => {
 
 export const authStatusGoogle = () => {
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      // const uid = user.uid
-    } else {
-      // User is signed out
-    }
+    if (user) return user.uid
   })
 }

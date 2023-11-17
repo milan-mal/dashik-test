@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'express'
 import Test from '../models/test.js'
 
 const testRouter = express.Router();
