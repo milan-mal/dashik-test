@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    overflow-y: scroll;
+  }
   h1 {
     @apply text-2xl tracking-wide pt-6 pb-4;
   }

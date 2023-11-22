@@ -1,4 +1,5 @@
 import React from 'react'
+import LoginGoogle from './LoginGoogle'
 
 export default function HeroSection() {
 
@@ -26,6 +27,9 @@ export default function HeroSection() {
                 Read more <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
+          </div>
+          <div className="flex justify-center">
+            <LoginGoogle />
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
