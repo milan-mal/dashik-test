@@ -20,3 +20,5 @@ testAnswerRouter.post('/', async (req, res) => {
   }
   //TODO finish posting
 })
+
+export default testAnswerRouter
