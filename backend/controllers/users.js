@@ -1,6 +1,7 @@
 import express from 'express'
 import { OAuth2Client } from 'google-auth-library'
 import User from '../models/user.js'
+import logger from '../utils/logger.js'
 
 const userRouter = express.Router()
 
@@ -16,8 +17,22 @@ userRouter.post('/', async (req, res) => {
       audience: '345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com',
     })
     const payload = ticket.getPayload()
+
     const userId = payload['sub']
-    console.log('userId', userId)
+    const userFullName = payload['name']
+    const userEmail = payload['email']
+    const userGivenName = payload['given_name']
+    const userFamilyName = payload['family_name']
+
+    const user = new User({
+      userId,
+      userFullName,
+      userGivenName,
+      userFamilyName,
+      userEmail
+    })
+    const savedUser = await user.save()
+    response.status(201).json(savedUser)
   }
   verify().catch(console.error)
 
