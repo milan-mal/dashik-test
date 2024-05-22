@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import uniqueValidator from 'mongoose-unique-validator'
 
 const userSchema = new mongoose.Schema({
   userId: {
@@ -24,5 +25,7 @@ userSchema.set('toJSON', {
     delete returnedObject.__v
   }
 })
+
+userSchema.plugin(uniqueValidator)
 
 export default mongoose.model('User', userSchema)

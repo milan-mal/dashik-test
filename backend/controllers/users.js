@@ -6,6 +6,12 @@ import logger from '../utils/logger.js'
 const userRouter = express.Router()
 
 userRouter.use(express.urlencoded({ extended: true }))
+
+userRouter.get('/', async (req, res) => {
+  const users = await User
+    .find({})
+  response.json(users)
+})
     
 userRouter.post('/', async (req, res) => {
   const credential = req.body.credential
@@ -24,6 +30,14 @@ userRouter.post('/', async (req, res) => {
     const userGivenName = payload['given_name']
     const userFamilyName = payload['family_name']
 
+    logger.info(
+      userId,
+      userFullName,
+      userGivenName,
+      userFamilyName,
+      userEmail
+    )
+    
     const user = new User({
       userId,
       userFullName,
@@ -31,8 +45,8 @@ userRouter.post('/', async (req, res) => {
       userFamilyName,
       userEmail
     })
-    const savedUser = await user.save()
-    response.status(201).json(savedUser)
+    // const savedUser = await user.save()
+    res.status(201).json(savedUser)
   }
   verify().catch(console.error)
 
