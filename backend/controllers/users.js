@@ -30,13 +30,7 @@ userRouter.post('/', async (req, res) => {
     const userGivenName = payload['given_name']
     const userFamilyName = payload['family_name']
 
-    logger.info(
-      userId,
-      userFullName,
-      userGivenName,
-      userFamilyName,
-      userEmail
-    )
+    logger.info(`User "${userGivenName}" is logging in.`)
     
     const user = new User({
       userId,
@@ -45,12 +39,18 @@ userRouter.post('/', async (req, res) => {
       userFamilyName,
       userEmail
     })
-    // const savedUser = await user.save()
-    res.status(201).json(savedUser)
+
+    const existingUser = await User.findOne({ userId: userId })
+    if ( !existingUser ) {
+      logger.info('Creating a new user.')
+      await user.save()
+    } else {
+      logger.info('User already exists.')
+    }
   }
+
   verify().catch(console.error)
 
-  res.status(204).end()
 })
 
 export default userRouter
