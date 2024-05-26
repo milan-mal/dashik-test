@@ -10,10 +10,10 @@ userRouter.use(express.urlencoded({ extended: true }))
 userRouter.get('/', async (req, res) => {
   const users = await User
     .find({})
-  response.json(users)
+  res.json(users)
 })
-    
-userRouter.post('/', async (req, res) => {
+
+userRouter.post('/', async (req) => {
   const credential = req.body.credential
   const client = new OAuth2Client()
 
@@ -31,7 +31,7 @@ userRouter.post('/', async (req, res) => {
     const userFamilyName = payload['family_name']
 
     logger.info(`User "${userGivenName}" is logging in.`)
-    
+
     const user = new User({
       userId,
       userFullName,
