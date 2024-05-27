@@ -13,7 +13,7 @@ userRouter.get('/', async (req, res) => {
   res.json(users)
 })
 
-userRouter.post('/', async (req) => {
+userRouter.post('/', async (req, res) => {
   const credential = req.body.credential
   const client = new OAuth2Client()
 
@@ -30,7 +30,7 @@ userRouter.post('/', async (req) => {
     const userGivenName = payload['given_name']
     const userFamilyName = payload['family_name']
 
-    logger.info(`User "${userGivenName}" is logging in.`)
+    logger.info(`User "${userFullName}" is logging in.`)
 
     const user = new User({
       userId,
@@ -44,12 +44,18 @@ userRouter.post('/', async (req) => {
     if ( !existingUser ) {
       logger.info('Creating a new user.')
       await user.save()
+      // TODO: Change the static url.
+      res.redirect('http://localhost:5173/')
+
     } else {
       logger.info('User already exists.')
     }
   }
 
-  verify().catch(console.error)
+  verify().catch(error => {
+    logger.error(error)
+    res.status(500).send('Internal Server Error')
+  })
 
 })
 
