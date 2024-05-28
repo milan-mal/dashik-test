@@ -31,21 +31,20 @@ userRouter.post('/', async (req, res) => {
     const userFamilyName = payload['family_name']
 
     logger.info(`User "${userFullName}" is logging in.`)
-
-    const user = new User({
-      userId,
-      userFullName,
-      userGivenName,
-      userFamilyName,
-      userEmail
-    })
-
     const existingUser = await User.findOne({ userId: userId })
+
     if ( !existingUser ) {
       logger.info('Creating a new user.')
+      const user = new User({
+        userId,
+        userFullName,
+        userGivenName,
+        userFamilyName,
+        userEmail
+      })
       await user.save()
       // TODO: Change the static url.
-      res.redirect('http://localhost:5173/')
+      res.redirect('http://localhost:5173/?login=true')
 
     } else {
       logger.info('User already exists.')

@@ -33,3 +33,5 @@ export default function LoginGoogle() {
     </>
   )
 }
+
+//TODO: Add displaying logged in user - how?

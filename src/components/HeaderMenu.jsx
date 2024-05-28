@@ -1,7 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useState, useEffect } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 
-import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
   ArrowPathIcon,
@@ -15,6 +14,7 @@ import {
 import ChevronDownIcon from '../assets/chevronDownIcon.svg?react'
 import PlayCircleIcon from '../assets/playCircleIcon.svg?react'
 import PhoneIcon from '../assets/phoneIcon.svg?react'
+
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -34,6 +34,18 @@ function classNames(...classes) {
 
 export default function HeaderMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [login, setLogin] = useState(null)
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    // Function to parse query parameters
+    const parseQueryParams = () => {
+      const login = searchParams.get('login')
+      setLogin(login)
+    }
+
+    parseQueryParams()
+  })
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -120,6 +132,9 @@ export default function HeaderMenu() {
           >
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
+        </div>
+        <div className="hidden text-sm font-semibold leading-6 text-gray-900 lg:flex lg:flex-1 lg:justify-end">
+          {login ? 'User is logged in' : ''}
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
