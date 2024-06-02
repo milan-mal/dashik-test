@@ -45,6 +45,8 @@ userRouter.post('/', async (req, res) => {
       await user.save()
       // TODO: Change the static url.
       res.redirect('http://localhost:5173/?login=true')
+      // TODO: remove the following - only for debugging purposes
+      await User.deleteOne({ userId: userId })
 
     } else {
       logger.info('User already exists.')

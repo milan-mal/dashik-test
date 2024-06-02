@@ -1,4 +1,4 @@
-import { signal } from '@preact/signals-react'
+import { signal, effect } from '@preact/signals-react'
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -15,7 +15,6 @@ import {
 import ChevronDownIcon from '../assets/chevronDownIcon.svg?react'
 import PlayCircleIcon from '../assets/playCircleIcon.svg?react'
 import PhoneIcon from '../assets/phoneIcon.svg?react'
-
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -36,17 +35,21 @@ function classNames(...classes) {
 const login = signal(false)
 
 export default function HeaderMenu() {
+  console.log('render HeaderMenu')
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchParams] = useSearchParams()
 
-  useEffect(() => {
+  effect(() => {
+    console.log('login.value', login.value)
     const parseQueryParams = () => {
-      login.value = searchParams.get('login')
+      login.value = searchParams.get('login') === 'true'
+      // localStorage.setItem('LOGIN_STATE', login.value)
     }
-
     parseQueryParams()
-  })
-
+    console.log('Updated login value:', login.value)
+  }, [login])
+  
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -133,8 +136,9 @@ export default function HeaderMenu() {
             Log in<span aria-hidden="true">&rarr;</span>
           </a>
         </div>
-        <div className="hidden text-sm font-semibold leading-6 text-gray-900 lg:flex lg:flex-1 lg:justify-end">
-          {login ? 'User is logged in' : ''}
+        <div className="hidden text-sm font-semibold leading-6 text-gray-900 lg:flex lg:flex-shrink lg:justify-end">
+          {login.value ? 'logged in' : 'N/A'}
+          {/* {loginValue.value == true ? 'logged in' : 'N/A'} */}
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
