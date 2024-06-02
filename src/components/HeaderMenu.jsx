@@ -1,5 +1,5 @@
 import { signal, effect } from '@preact/signals-react'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
@@ -44,7 +44,7 @@ export default function HeaderMenu() {
     console.log('login.value', login.value)
     const parseQueryParams = () => {
       login.value = searchParams.get('login') === 'true'
-      // localStorage.setItem('LOGIN_STATE', login.value)
+      localStorage.setItem('LOGIN_STATE', login.value)
     }
     parseQueryParams()
     console.log('Updated login value:', login.value)
