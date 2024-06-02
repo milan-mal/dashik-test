@@ -1,3 +1,4 @@
+import { signal } from '@preact/signals-react'
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -32,16 +33,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+const login = signal(false)
+
 export default function HeaderMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [login, setLogin] = useState(null)
   const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    // Function to parse query parameters
     const parseQueryParams = () => {
-      const login = searchParams.get('login')
-      setLogin(login)
+      login.value = searchParams.get('login')
     }
 
     parseQueryParams()
@@ -130,7 +130,7 @@ export default function HeaderMenu() {
             className="text-sm font-semibold leading-6 text-gray-900"
             // onClick=""
           >
-            Log in <span aria-hidden="true">&rarr;</span>
+            Log in<span aria-hidden="true">&rarr;</span>
           </a>
         </div>
         <div className="hidden text-sm font-semibold leading-6 text-gray-900 lg:flex lg:flex-1 lg:justify-end">
