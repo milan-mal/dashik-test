@@ -1,12 +1,18 @@
 import React, {useEffect} from 'react'
 
-export default function LoginGoogle() {
 
+export default function LoginGoogle() {
+  
   useEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://accounts.google.com/gsi/client'
     script.async = true
     document.head.appendChild(script)
+
+    const onClickScript = document.createElement('script')
+    onClickScript.src = 'http://localhost:5173/src/onClickGoogleButton.js'
+    onClickScript.async = true
+    document.head.appendChild(onClickScript)
 
     return () => {
       document.head.removeChild(script)
@@ -28,7 +34,9 @@ export default function LoginGoogle() {
         data-theme="outline"
         data-text="continue_with"
         data-size="large"
-        data-logo_alignment="left">
+        data-logo_alignment="left"
+        data-click_listener="onClickGoogleButton"
+      >
       </div>
     </>
   )

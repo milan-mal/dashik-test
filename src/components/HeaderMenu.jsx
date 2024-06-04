@@ -48,7 +48,7 @@ export default function HeaderMenu() {
     }
     parseQueryParams()
     console.log('Updated login value:', login.value)
-  }, [login])
+  })
   
   return (
     <header className="absolute inset-x-0 top-0 z-50">
