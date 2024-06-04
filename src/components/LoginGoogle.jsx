@@ -20,6 +20,7 @@ export default function LoginGoogle() {
   }, [])
 
   return (
+    // TODO: change to javascript implementation
     <>
       <div id="g_id_onload"
         data-client_id="345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com"
