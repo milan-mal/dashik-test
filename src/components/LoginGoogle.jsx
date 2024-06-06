@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react'
+import { signal } from '@preact/signals-react'
 
+const googleCredential = signal(null)
 
 export default function LoginGoogle() {
   
@@ -14,14 +16,25 @@ export default function LoginGoogle() {
     googleButton.async = true
     document.head.appendChild(googleButton)
 
+    const handleStorageChange = () => {
+      googleCredential.value = localStorage.getItem('googleCredential')
+      console.log('googleCredential.value', googleCredential.value)
+    }
+  
+    window.addEventListener('googleCredential', handleStorageChange)  
+    
     return () => {
       document.head.removeChild(script)
+      window.removeEventListener('googleCredential', handleStorageChange)
     }
   }, [])
-
+  
   return (
     <>
-      <div id="buttonDiv"></div>
+      <div className="flex flex-col" >
+        <div className="text-center" >{googleCredential.value ? 'Logged in' : 'Not logged in'}</div>
+        <div id="buttonDiv"></div>
+      </div>
     </>
   )
 }
