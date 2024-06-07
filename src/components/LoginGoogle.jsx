@@ -1,9 +1,18 @@
-import React, {useEffect} from 'react'
-import { signal } from '@preact/signals-react'
+import React, {useState, useEffect} from 'react'
+// import { signal } from '@preact/signals-react'
 
-const googleCredential = signal(null)
+// const googleCredential = signal(null)
 
 export default function LoginGoogle() {
+  const [googleCredentialState, setGoogleCredentialState] = useState('')
+  
+  const handleStorageChange = () => {
+    console.log('handleStorageChange is running')
+    // googleCredential.value = localStorage.getItem('googleCredential')
+    // console.log('googleCredential.value', googleCredential.value)
+    setGoogleCredentialState(localStorage.getItem('googleCredential'))
+    console.log('googleCredentialState', googleCredentialState)
+  }
   
   useEffect(() => {
     const script = document.createElement('script')
@@ -16,10 +25,6 @@ export default function LoginGoogle() {
     googleButton.async = true
     document.head.appendChild(googleButton)
 
-    const handleStorageChange = () => {
-      googleCredential.value = localStorage.getItem('googleCredential')
-      console.log('googleCredential.value', googleCredential.value)
-    }
   
     window.addEventListener('googleCredential', handleStorageChange)  
     
@@ -32,7 +37,7 @@ export default function LoginGoogle() {
   return (
     <>
       <div className="flex flex-col" >
-        <div className="text-center" >{googleCredential.value ? 'Logged in' : 'Not logged in'}</div>
+        <div className="text-center" >{googleCredentialState ? 'Logged in' : 'Not logged in'}</div>
         <div id="buttonDiv"></div>
       </div>
     </>
