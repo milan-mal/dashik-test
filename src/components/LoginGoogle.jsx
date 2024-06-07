@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { computed, signal, useSignal } from '@preact/signals-react'
 
+import userService from '../services/users'
+
 const googleCredential = signal(null)
 const isLoggedIn = computed(() => googleCredential.value !== null ? 'true' : 'false')
 
 const handleStorageChange = () => {
-  console.log('handleStorageChange is running')
   googleCredential.value = localStorage.getItem('googleCredential')
-  console.log('googleCredential.value', googleCredential.value)
 }
 
 export default function LoginGoogle() {

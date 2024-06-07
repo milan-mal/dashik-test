@@ -42,9 +42,9 @@ userRouter.post('/', async (req, res) => {
         userFamilyName,
         userEmail
       })
-      await user.save()
+      const savedUser = await user.save()
       // TODO: Change the static url.
-      res.redirect('http://localhost:5173/?login=true')
+      res.status(201).json(savedUser)
       // TODO: remove the following - only for debugging purposes
       await User.deleteOne({ userId: userId })
 
