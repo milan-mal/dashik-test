@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react'
-// import { signal } from '@preact/signals-react'
+import React, { useEffect } from 'react'
+import { computed, signal, useSignal } from '@preact/signals-react'
 
-// const googleCredential = signal(null)
+const googleCredential = signal(null)
+const isLoggedIn = computed(() => googleCredential.value !== null ? 'true' : 'false')
+
+const handleStorageChange = () => {
+  console.log('handleStorageChange is running')
+  googleCredential.value = localStorage.getItem('googleCredential')
+  console.log('googleCredential.value', googleCredential.value)
+}
 
 export default function LoginGoogle() {
-  const [googleCredentialState, setGoogleCredentialState] = useState('')
-  
-  const handleStorageChange = () => {
-    console.log('handleStorageChange is running')
-    // googleCredential.value = localStorage.getItem('googleCredential')
-    // console.log('googleCredential.value', googleCredential.value)
-    setGoogleCredentialState(localStorage.getItem('googleCredential'))
-    console.log('googleCredentialState', googleCredentialState)
-  }
+  const isLoggedInValue = useSignal(isLoggedIn)
   
   useEffect(() => {
     const script = document.createElement('script')
@@ -37,7 +36,7 @@ export default function LoginGoogle() {
   return (
     <>
       <div className="flex flex-col" >
-        <div className="text-center" >{googleCredentialState ? 'Logged in' : 'Not logged in'}</div>
+        <div className="text-center" >{isLoggedInValue}</div>
         <div id="buttonDiv"></div>
       </div>
     </>
