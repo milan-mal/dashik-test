@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { computed, signal, useSignal } from '@preact/signals-react'
+import { computed, signal, useSignal, effect } from '@preact/signals-react'
 
 import userService from '../services/users'
 
@@ -9,6 +9,17 @@ const isLoggedIn = computed(() => googleCredential.value !== null ? 'true' : 'fa
 const handleStorageChange = () => {
   googleCredential.value = localStorage.getItem('googleCredential')
 }
+
+effect(() => {
+  // const user = {
+  //   credential: googleCredential.value
+  // }
+  // console.log('user.credential', user.credential)
+  userService
+    .postUser(googleCredential.value)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+})
 
 export default function LoginGoogle() {
   const isLoggedInValue = useSignal(isLoggedIn)
@@ -36,6 +47,7 @@ export default function LoginGoogle() {
   return (
     <>
       <div className="flex flex-col" >
+        {/* //TODO: remove */}
         <div className="text-center" >{isLoggedInValue}</div>
         <div id="buttonDiv"></div>
       </div>

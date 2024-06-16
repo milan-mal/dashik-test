@@ -15,6 +15,8 @@ userRouter.get('/', async (req, res) => {
 
 userRouter.post('/', async (req, res) => {
   const credential = req.body.credential
+  console.log('credential', credential)
+
   const client = new OAuth2Client()
 
   async function verify() {
@@ -43,7 +45,6 @@ userRouter.post('/', async (req, res) => {
         userEmail
       })
       const savedUser = await user.save()
-      // TODO: Change the static url.
       res.status(201).json(savedUser)
       // TODO: remove the following - only for debugging purposes
       await User.deleteOne({ userId: userId })
