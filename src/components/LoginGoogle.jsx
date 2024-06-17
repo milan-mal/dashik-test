@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import { computed, signal, useSignal, effect } from '@preact/signals-react'
+import { signal, effect } from '@preact/signals-react'
 
 import userService from '../services/users'
 
 const googleCredential = signal(null)
-const isLoggedIn = computed(() => googleCredential.value !== null ? 'true' : 'false')
 
 const handleStorageChange = () => {
-  googleCredential.value = localStorage.getItem('googleCredential')
+  googleCredential.value = JSON.parse(localStorage.getItem('googleCredential'))
 }
 
 effect(() => {
@@ -15,14 +14,15 @@ effect(() => {
   //   credential: googleCredential.value
   // }
   // console.log('user.credential', user.credential)
-  userService
-    .postUser(googleCredential.value)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+  if(googleCredential.value !== null) {
+    userService
+      .postUser(googleCredential.value)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
 })
 
 export default function LoginGoogle() {
-  const isLoggedInValue = useSignal(isLoggedIn)
   
   useEffect(() => {
     const script = document.createElement('script')
@@ -31,10 +31,10 @@ export default function LoginGoogle() {
     document.head.appendChild(script)
 
     const googleButton = document.createElement('script')
-    googleButton.src = 'http://localhost:5173/src/scripts/googleLoginButton.js'
+    // TODO: change to dynamic url
+    googleButton.src = 'http://localhost:5174/src/scripts/googleLoginButton.js'
     googleButton.async = true
     document.head.appendChild(googleButton)
-
   
     window.addEventListener('googleCredential', handleStorageChange)  
     
@@ -47,8 +47,6 @@ export default function LoginGoogle() {
   return (
     <>
       <div className="flex flex-col" >
-        {/* //TODO: remove */}
-        <div className="text-center" >{isLoggedInValue}</div>
         <div id="buttonDiv"></div>
       </div>
     </>

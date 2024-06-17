@@ -136,10 +136,6 @@ export default function HeaderMenu() {
             Log in<span aria-hidden="true">&rarr;</span>
           </a>
         </div>
-        <div className="hidden text-sm font-semibold leading-6 text-gray-900 lg:flex lg:flex-shrink lg:justify-end">
-          {/* //TODO: remove */}
-          {login.value ? 'logged in' : 'N/A'}
-        </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10" />

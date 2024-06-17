@@ -4,7 +4,6 @@ import User from '../models/user.js'
 import logger from '../utils/logger.js'
 
 const userRouter = express.Router()
-
 userRouter.use(express.urlencoded({ extended: true }))
 
 userRouter.get('/', async (req, res) => {
@@ -15,8 +14,6 @@ userRouter.get('/', async (req, res) => {
 
 userRouter.post('/', async (req, res) => {
   const credential = req.body.credential
-  console.log('credential', credential)
-
   const client = new OAuth2Client()
 
   async function verify() {
@@ -48,7 +45,6 @@ userRouter.post('/', async (req, res) => {
       res.status(201).json(savedUser)
       // TODO: remove the following - only for debugging purposes
       await User.deleteOne({ userId: userId })
-
     } else {
       logger.info('User already exists.')
     }
