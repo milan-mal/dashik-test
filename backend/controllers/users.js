@@ -43,7 +43,7 @@ userRouter.post('/', async (req, res) => {
       })
       const savedUser = await user.save()
       res.status(201).json(savedUser)
-      // TODO: remove the following - only for debugging purposes
+      //TODO: remove the following - only for debugging purposes
       await User.deleteOne({ userId: userId })
     } else {
       logger.info('User already exists.')

@@ -31,7 +31,7 @@ export default function LoginGoogle() {
     document.head.appendChild(script)
 
     const googleButton = document.createElement('script')
-    // TODO: change to dynamic url
+    //TODO: change to dynamic url
     googleButton.src = 'http://localhost:5174/src/scripts/googleLoginButton.js'
     googleButton.async = true
     document.head.appendChild(googleButton)
