@@ -1,10 +1,6 @@
 import mongoose from 'mongoose'
 
 const testAnswerSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
   testId: {
     type: Number,
     required: true,
@@ -14,7 +10,11 @@ const testAnswerSchema = new mongoose.Schema({
       questionId: Number,
       answerId: Number,
     }
-  ]
+  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }
 })
 
 testAnswerSchema.set('toJSON', {

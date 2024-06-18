@@ -13,7 +13,9 @@ const getTokenFrom = req => {
 }
 
 testAnswerRouter.get('/', async (req, res) => {
-  const testAnswers = await TestAnswer.find({})
+  const testAnswers = await TestAnswer
+    .find({})
+    .populate('user', { userId: 1, userFullName: 1 })
   res.status(200).json(testAnswers)
 })
 

@@ -7,7 +7,9 @@ const userRouter = express.Router()
 userRouter.use(express.urlencoded({ extended: true }))
 
 userRouter.get('/', async (req, res) => {
-  const users = await User.find({})
+  const users = await User
+    .find({})
+    .populate('testAnswers', { testId: 1 })
   res.status(200).json(users)
 })
 
