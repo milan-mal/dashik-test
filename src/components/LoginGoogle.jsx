@@ -4,16 +4,11 @@ import { signal, effect } from '@preact/signals-react'
 import userService from '../services/users'
 
 const googleCredential = signal(null)
-
 const handleStorageChange = () => {
   googleCredential.value = JSON.parse(localStorage.getItem('googleCredential'))
 }
 
 effect(() => {
-  // const user = {
-  //   credential: googleCredential.value
-  // }
-  // console.log('user.credential', user.credential)
   if(googleCredential.value !== null) {
     userService
       .postUser(googleCredential.value)
@@ -31,8 +26,7 @@ export default function LoginGoogle() {
     document.head.appendChild(script)
 
     const googleButton = document.createElement('script')
-    //TODO: change to dynamic url
-    googleButton.src = 'http://localhost:5174/src/scripts/googleLoginButton.js'
+    googleButton.src = '/src/scripts/googleLoginButton.js'
     googleButton.async = true
     document.head.appendChild(googleButton)
   
@@ -46,9 +40,7 @@ export default function LoginGoogle() {
   
   return (
     <>
-      <div className="flex flex-col" >
-        <div id="buttonDiv"></div>
-      </div>
+      <div id="buttonDiv"></div>
     </>
   )
 }

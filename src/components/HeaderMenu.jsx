@@ -16,6 +16,8 @@ import ChevronDownIcon from '../assets/chevronDownIcon.svg?react'
 import PlayCircleIcon from '../assets/playCircleIcon.svg?react'
 import PhoneIcon from '../assets/phoneIcon.svg?react'
 
+import LoginGoogle from './LoginGoogle'
+
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
   { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
@@ -128,13 +130,7 @@ export default function HeaderMenu() {
           </div>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-            // onClick=""
-          >
-            Log in<span aria-hidden="true">&rarr;</span>
-          </a>
+          <LoginGoogle />
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -203,14 +199,6 @@ export default function HeaderMenu() {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Company
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
                 </a>
               </div>
             </div>

@@ -13,7 +13,7 @@ window.onload = function () {
   // eslint-disable-next-line no-undef
   google.accounts.id.renderButton(
     document.getElementById('buttonDiv'),
-    { theme: 'outline', size: 'large', shape: 'pill' }  // customization attributes
+    { theme: 'outline', size: 'medium', shape: 'pill' }  // customization attributes
   )
   // eslint-disable-next-line no-undef
   google.accounts.id.prompt() // also display the One Tap dialog
