@@ -12,7 +12,9 @@ effect(() => {
   if(googleCredential.value !== null) {
     userService
       .postUser(googleCredential.value)
-      .then(res => console.log(res))
+      .then(res => {
+        res.userGivenName ? localStorage.setItem('USER_GIVEN_NAME', res.userGivenName) : null
+      })
       .catch(err => console.log(err))
   }
 })
@@ -20,11 +22,13 @@ effect(() => {
 export default function LoginGoogle() {
   
   useEffect(() => {
+    // Load the Sign in with Google script
     const script = document.createElement('script')
     script.src = 'https://accounts.google.com/gsi/client'
     script.async = true
     document.head.appendChild(script)
-
+    
+    // Load the Sign in with Google button and handleCredentialResponse script
     const googleButton = document.createElement('script')
     googleButton.src = '/src/scripts/googleLoginButton.js'
     googleButton.async = true

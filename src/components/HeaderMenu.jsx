@@ -1,6 +1,5 @@
-import { signal, effect } from '@preact/signals-react'
 import React, { Fragment, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
@@ -34,23 +33,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const login = signal(false)
-
 export default function HeaderMenu() {
-  console.log('render HeaderMenu')
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [searchParams] = useSearchParams()
-
-  effect(() => {
-    console.log('login.value', login.value)
-    const parseQueryParams = () => {
-      login.value = searchParams.get('login') === 'true'
-      localStorage.setItem('LOGIN_STATE', login.value)
-    }
-    parseQueryParams()
-    console.log('Updated login value:', login.value)
-  })
   
   return (
     <header className="absolute inset-x-0 top-0 z-50">
