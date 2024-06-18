@@ -10,7 +10,7 @@ const testAnswerSchema = new mongoose.Schema({
     required: true,
   },
   selectedAnswers: [
-    { 
+    {
       questionId: Number,
       answerId: Number,
     }

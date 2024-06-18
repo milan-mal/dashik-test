@@ -7,15 +7,14 @@ const userRouter = express.Router()
 userRouter.use(express.urlencoded({ extended: true }))
 
 userRouter.get('/', async (req, res) => {
-  const users = await User
-    .find({})
-  res.json(users)
+  const users = await User.find({})
+  res.status(200).json(users)
 })
 
 userRouter.get('/:id', async (req, res) => {
   const user = await User.findById(req.params.id)
   if(user) {
-    res.json(user)
+    res.status(200).json(user)
   } else {
     res.status(404).send('User not found')
   }

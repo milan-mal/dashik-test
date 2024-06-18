@@ -1,5 +1,5 @@
 import express from 'express'
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 import TestAnswer from '../models/testAnswer.js'
 
 const testAnswerRouter = express.Router()
@@ -12,11 +12,15 @@ const getTokenFrom = req => {
   return null
 }
 
+testAnswerRouter.get('/', async (req, res) => {
+  const testAnswers = await TestAnswer.find({})
+  res.status(200).json(testAnswers)
+})
+
 testAnswerRouter.post('/', async (req, res) => {
-  const body = request.body
   const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
   if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
+    return res.status(401).json({ error: 'token invalid' })
   }
   //TODO finish posting
 })

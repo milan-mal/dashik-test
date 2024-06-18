@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import config from './utils/config.js'
 import logger from './utils/logger.js'
 import testRouter from './controllers/tests.js'
+import testAnswerRouter from './controllers/testAnswers.js'
 import userRouter from './controllers/users.js'
 import middleware from './utils/middleware.js'
 
@@ -25,6 +26,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/tests', testRouter)
+app.use('/api/testAnswers', testAnswerRouter)
 app.use('/api/users', userRouter)
 
 app.use(middleware.unknownEndpoint)
