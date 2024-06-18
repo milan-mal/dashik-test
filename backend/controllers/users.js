@@ -12,6 +12,15 @@ userRouter.get('/', async (req, res) => {
   res.json(users)
 })
 
+userRouter.get('/:id', async (req, res) => {
+  const user = await User.findById(req.params.id)
+  if(user) {
+    res.json(user)
+  } else {
+    res.status(404).send('User not found')
+  }
+})
+
 userRouter.post('/', async (req, res) => {
   const credential = req.body.credential
   const client = new OAuth2Client()
@@ -45,6 +54,7 @@ userRouter.post('/', async (req, res) => {
       res.status(201).json(savedUser)
       //TODO: remove the following - only for debugging purposes
       await User.deleteOne({ userId: userId })
+      logger.info('User removed')
     } else {
       logger.info('User already exists.')
     }
