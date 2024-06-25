@@ -13,7 +13,7 @@ effect(() => {
     userService
       .postUser(googleCredential.value)
       .then(res => {
-        res.userGivenName ? localStorage.setItem('USER_GIVEN_NAME', res.userGivenName) : null
+        localStorage.setItem('USER_GIVEN_NAME', res.userGivenName || null)
       })
       .catch(err => console.log(err))
   }

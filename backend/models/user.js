@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  testAnswers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'TestAnswer'
+    }
+  ]
 })
 
 userSchema.set('toJSON', {

@@ -1,12 +1,14 @@
 import express from 'express'
-import jwt from 'jsonwebtoken'
+import { OAuth2Client } from 'google-auth-library'
+
 import TestAnswer from '../models/testAnswer.js'
+import logger from '../utils/logger.js'
 
 const testAnswerRouter = express.Router()
 
 const getTokenFrom = req => {
   const authorization = req.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')){
+  if (authorization?.startsWith('Bearer ')){
     return authorization.replace('Bearer ', '')
   }
   return null
@@ -20,11 +22,24 @@ testAnswerRouter.get('/', async (req, res) => {
 })
 
 testAnswerRouter.post('/', async (req, res) => {
-  const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
-  if (!decodedToken.id) {
-    return res.status(401).json({ error: 'token invalid' })
+  const authClient = new OAuth2Client()
+  async function verify() {
+    const ticket = await authClient.verifyIdToken({
+      idToken: getTokenFrom(req),
+      //TODO: change audience to env variable
+      audience: '345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com',
+    }).catch(error => {
+      logger.error(error)
+    })
+    // const userId = ticket.getUserId()
+    // if (!userId) {
+    //   return res.status(401).json({ error: 'token invalid' })
+    // } else {
+    //   return res.status(201).json({ userId: userId })
+    // }
   }
-  //TODO finish posting
+  verify()
+  //TODO: finish posting
 })
 
 export default testAnswerRouter
