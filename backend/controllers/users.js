@@ -16,7 +16,9 @@ userRouter.get('/', async (req, res) => {
 })
 
 userRouter.get('/:id', async (req, res) => {
-  const user = await User.findById(req.params.id)
+  const user = await User
+    .findById(req.params.id)
+    .populate('testAnswers', { testId: 1 })
   if(user) {
     res.status(200).json(user)
   } else {
@@ -56,8 +58,8 @@ userRouter.post('/', async (req, res) => {
       const savedUser = await user.save()
       res.status(201).json(savedUser)
       //TODO: remove the following - only for debugging purposes
-      await User.deleteOne({ userId: userId })
-      logger.info('User removed')
+      // await User.deleteOne({ userId: userId })
+      // logger.info('User removed')
     } else {
       logger.info('User already exists.')
     }

@@ -1,6 +1,11 @@
 import mongoose from 'mongoose'
 
 const testSchema = new mongoose.Schema({
+  testId: {
+    type: Number,
+    required: true
+
+  },
   testName: {
     type: String,
     required: true
@@ -12,7 +17,7 @@ const testSchema = new mongoose.Schema({
     }
   ],
   questions: [
-    { 
+    {
       questionId: {
         type: Number,
         required: true
