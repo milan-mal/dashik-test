@@ -31,7 +31,7 @@ export default function TestsPage() {
     setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
   }, [selectedAnswers, questionCount])
 
-  const Spinner = () => {
+  function Spinner() {
     return(
       <div className="flex justify-center h-full">
         <div className="w-16 h-16 border-t-4 border-fuchsia-800 border-solid rounded-full animate-spin"></div>
