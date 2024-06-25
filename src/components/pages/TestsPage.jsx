@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import TestQuestion from '../TestQuestion'
 import testService from '../../services/tests'
+import TestQuestion from '../TestQuestion'
 import Pagination from '../Pagination'
+import Spinner from '../ui_components/Spinner'
+import ButtonConfirm from '../ui_components/ButtonConfirm'
 
 export default function TestsPage() {
   const [currentTest, setCurrentTest] = useState({})
@@ -31,28 +33,6 @@ export default function TestsPage() {
     setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
   }, [selectedAnswers, questionCount])
 
-  function Spinner() {
-    return(
-      <div className="flex justify-center h-full">
-        <div className="w-16 h-16 border-t-4 border-fuchsia-800 border-solid rounded-full animate-spin"></div>
-      </div>
-    )
-  }
-
-  const ButtonConfirm = () => {
-    return(
-      <div className='w-full grid justify-center p-10' >
-        <button
-          type='button'
-          onClick={() => {}}
-          className='px-4 py-2 rounded-md border border-solid border-gray-200 bg-white text-indigo-600 font-semibold leading-5
-          hover:bg-indigo-600 hover:text-white disabled:text-gray-500 disabled:bg-gray-100'
-          disabled={!allQuestionsAnswered}
-        >Confirm my answers</button>
-      </div>
-    )
-  }
-
   const getCurrentQuestion = () => {
     if( currentTest.questions ){
       const currentQuestion = currentTest.questions[currentQuestionIndex]
@@ -60,7 +40,7 @@ export default function TestsPage() {
         <>
           <Pagination questionCount={questionCount} currentQuestionIndex={currentQuestionIndex} handleChangeQuestion={handleChangeQuestion} />
           <TestQuestion questionData={currentQuestion} handleChangeAnswer={handleChangeAnswer} selectedAnswerId={selectedAnswers[currentQuestion.questionId]} />
-          <ButtonConfirm />
+          <ButtonConfirm allQuestionsAnswered={allQuestionsAnswered} />
         </>
       )
     } else {
