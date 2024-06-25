@@ -6,6 +6,7 @@ function handleCredentialResponse(response) {
 window.onload = function () {
   // eslint-disable-next-line no-undef
   google.accounts.id.initialize({
+    // TODO: change to .env variable
     client_id: '345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com',
     callback: handleCredentialResponse,
     // use_fedcm_for_prompt: true

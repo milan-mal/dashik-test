@@ -1,5 +1,7 @@
 import express from 'express'
 import { OAuth2Client } from 'google-auth-library'
+import 'dotenv/config'
+
 import User from '../models/user.js'
 import logger from '../utils/logger.js'
 
@@ -29,7 +31,7 @@ userRouter.post('/', async (req, res) => {
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: credential,
-      audience: '345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com',
+      audience: process.env.GOOGLE_SIGN_IN_ID,
     })
     const payload = ticket.getPayload()
 

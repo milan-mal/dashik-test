@@ -1,5 +1,6 @@
 import express from 'express'
 import { OAuth2Client } from 'google-auth-library'
+import 'dotenv/config'
 
 import TestAnswer from '../models/testAnswer.js'
 import logger from '../utils/logger.js'
@@ -26,19 +27,16 @@ testAnswerRouter.post('/', async (req, res) => {
   async function verify() {
     const ticket = await authClient.verifyIdToken({
       idToken: getTokenFrom(req),
-      //TODO: change audience to env variable
-      audience: '345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com',
-    }).catch(error => {
-      logger.error(error)
+      audience: process.env.GOOGLE_SIGN_IN_ID,
     })
-    // const userId = ticket.getUserId()
-    // if (!userId) {
-    //   return res.status(401).json({ error: 'token invalid' })
-    // } else {
-    //   return res.status(201).json({ userId: userId })
-    // }
+    const userId = ticket.getUserId()
+    res.status(201).json({ userId: userId })
   }
   verify()
+    .catch(error => {
+      logger.error(error)
+      res.status(401).json({ error: 'token invalid' })
+    })
   //TODO: finish posting
 })
 

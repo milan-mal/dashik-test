@@ -16,5 +16,5 @@ export default function ButtonConfirm({ allQuestionsAnswered }) {
 }
 
 ButtonConfirm.propTypes = {
-  allQuestionsAnswered: PropTypes.boolean.isRequired,
+  allQuestionsAnswered: PropTypes.bool.isRequired,
 }
