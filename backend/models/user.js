@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   userGivenName: String,
   userFamilyName: String,
-  userEmail:  {
+  userEmail: {
     type: String,
     required: true,
   },
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'TestAnswer'
     }
-  ]
+  ],
 })
 
 userSchema.set('toJSON', {

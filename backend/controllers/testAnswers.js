@@ -41,7 +41,7 @@ testAnswerRouter.post('/', async (req, res) => {
   if(!user) {
     res.status(401).json({ error: 'user not found' })
   }
-  const userSystemId = user.id
+  const userSystemId = user._id
   logger.info('userSystemId', userSystemId)
 
   const testAnswer = new TestAnswer({
@@ -49,8 +49,11 @@ testAnswerRouter.post('/', async (req, res) => {
     selectedAnswers: req.body.selectedAnswers,
     user: userSystemId,
   })
-
   const savedTestAnswer = await testAnswer.save()
+  await User.findByIdAndUpdate(userSystemId, {
+    $push: { testAnswers: savedTestAnswer._id }
+  })
+
   res.status(201).json(savedTestAnswer)
 })
 

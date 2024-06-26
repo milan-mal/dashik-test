@@ -11,7 +11,7 @@ userRouter.use(express.urlencoded({ extended: true }))
 userRouter.get('/', async (req, res) => {
   const users = await User
     .find({})
-    .populate('testAnswers', { testId: 1 })
+    .populate('testAnswers')
   res.status(200).json(users)
 })
 
