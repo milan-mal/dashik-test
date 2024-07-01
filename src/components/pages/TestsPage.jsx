@@ -12,6 +12,7 @@ export default function TestsPage() {
   const [questionCount, setQuestionCount] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState({})  //TODO: change to localStorage
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState()
 
   const initialTestId = '653c1b5d9043071e5085d008'
 
@@ -26,6 +27,13 @@ export default function TestsPage() {
         )
     }, 1500)
   }, [])
+
+  useEffect(() => {
+    if(scrollPosition){
+      console.log('scrolling to position', scrollPosition)
+      window.scrollTo(0, scrollPosition)
+    }
+  }, [currentQuestionIndex])
 
   useEffect(() => {
     // Check if all questions are answered whenever selectedAnswers or currentQuestionIndex changes
@@ -49,6 +57,8 @@ export default function TestsPage() {
   }
 
   const handleChangeQuestion = (newQuestionIndex) => {
+    setScrollPosition(window.scrollY)
+    console.log('scrollPosition', scrollPosition)
     setCurrentQuestionIndex(newQuestionIndex)
   }
 
@@ -59,7 +69,10 @@ export default function TestsPage() {
     }))
     localStorage.setItem('selectedAnswers', JSON.stringify(selectedAnswers))
     console.log('selectedAnswers', JSON.stringify(selectedAnswers))
+    setScrollPosition(window.scrollY)
   }
+
+  console.log('TestPage rendered')
   
   return (
     <div className="bg-white w-full">
