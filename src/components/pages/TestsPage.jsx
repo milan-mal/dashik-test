@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react'
 import testService from '../../services/tests'
 import TestQuestion from '../TestQuestion'
 import Pagination from '../Pagination'
@@ -27,19 +26,21 @@ export default function TestsPage() {
         )
     }, 1500)
   }, [])
-
-  useEffect(() => {
-    if(scrollPosition){
-      console.log('scrolling to position', scrollPosition)
-      window.scrollTo(0, scrollPosition)
-    }
-  }, [currentQuestionIndex])
-
+  
   useEffect(() => {
     // Check if all questions are answered whenever selectedAnswers or currentQuestionIndex changes
     const answeredQuestionsCount = Object.keys(selectedAnswers).length
     setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
   }, [selectedAnswers, questionCount])
+
+  useEffect(() => {
+    if(scrollPosition){
+      console.log('scrolling to position', scrollPosition)
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition)
+      }, 1)
+    }
+  }, [currentQuestionIndex])
 
   const getCurrentQuestion = () => {
     if( currentTest.questions ){
@@ -58,18 +59,20 @@ export default function TestsPage() {
 
   const handleChangeQuestion = (newQuestionIndex) => {
     setScrollPosition(window.scrollY)
-    console.log('scrollPosition', scrollPosition)
+    console.log('window.scrollY', window.scrollY)
+
     setCurrentQuestionIndex(newQuestionIndex)
   }
 
   const handleChangeAnswer = (selectedQuestionId, selectedAnswerId) => {
+    setScrollPosition(window.scrollY)
+
     selectedAnswers[selectedQuestionId] = selectedAnswerId
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers, [selectedQuestionId]: selectedAnswerId,
     }))
     localStorage.setItem('selectedAnswers', JSON.stringify(selectedAnswers))
     console.log('selectedAnswers', JSON.stringify(selectedAnswers))
-    setScrollPosition(window.scrollY)
   }
 
   console.log('TestPage rendered')
