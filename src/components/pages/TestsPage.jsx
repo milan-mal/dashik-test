@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import testService from '../../services/tests'
 import TestQuestion from '../TestQuestion'
 import Pagination from '../Pagination'
@@ -11,7 +11,7 @@ export default function TestsPage() {
   const [questionCount, setQuestionCount] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState({})  //TODO: change to localStorage
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
-  const [scrollPosition, setScrollPosition] = useState()
+  const scrollPositionRef = useRef(null)
 
   const initialTestId = '653c1b5d9043071e5085d008'
 
@@ -28,19 +28,19 @@ export default function TestsPage() {
   }, [])
   
   useEffect(() => {
+    if (scrollPositionRef.current !== null) {
+      requestAnimationFrame(() => {
+        console.log('Restoring scroll position to:', scrollPositionRef.current)
+        window.scrollTo(0, scrollPositionRef.current)
+        // Reset after scrolling
+        scrollPositionRef.current = null
+      })
+    }
+
     // Check if all questions are answered whenever selectedAnswers or currentQuestionIndex changes
     const answeredQuestionsCount = Object.keys(selectedAnswers).length
     setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
-  }, [selectedAnswers, questionCount])
-
-  useEffect(() => {
-    if(scrollPosition){
-      console.log('scrolling to position', scrollPosition)
-      setTimeout(() => {
-        window.scrollTo(0, scrollPosition)
-      }, 1)
-    }
-  }, [currentQuestionIndex])
+  }, [currentQuestionIndex, selectedAnswers, questionCount])
 
   const getCurrentQuestion = () => {
     if( currentTest.questions ){
@@ -58,15 +58,16 @@ export default function TestsPage() {
   }
 
   const handleChangeQuestion = (newQuestionIndex) => {
-    setScrollPosition(window.scrollY)
-    console.log('window.scrollY', window.scrollY)
-
+    scrollPositionRef.current = window.scrollY
+    console.log('Captured scroll position before changing question:', scrollPositionRef.current)
+    
     setCurrentQuestionIndex(newQuestionIndex)
   }
 
   const handleChangeAnswer = (selectedQuestionId, selectedAnswerId) => {
-    setScrollPosition(window.scrollY)
-
+    scrollPositionRef.current = window.scrollY
+    console.log('Captured scroll position before changing answer:', scrollPositionRef.current)
+    
     selectedAnswers[selectedQuestionId] = selectedAnswerId
     setSelectedAnswers((prevSelectedAnswers) => ({
       ...prevSelectedAnswers, [selectedQuestionId]: selectedAnswerId,

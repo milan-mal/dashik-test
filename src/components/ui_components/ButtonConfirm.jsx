@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+console.log('ButtonConfirm rendered')
+
 export default function ButtonConfirm({ allQuestionsAnswered }) {
   return(
     <div className='w-full grid justify-center p-10' >

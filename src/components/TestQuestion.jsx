@@ -44,6 +44,8 @@ import PropTypes from 'prop-types'
 // const questionName = 'How do you say "Ahoj" in English'
 // const questionDescription = 'Please anwer the question.'
 
+console.log('TestQuestion rendered')
+
 export default function TestQuestion({ questionData, handleChangeAnswer, selectedAnswerId }) {
   return (
     <div className="max-w-md" >
