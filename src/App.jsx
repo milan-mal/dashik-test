@@ -5,7 +5,7 @@ import HeaderMenu from './components/HeaderMenu'
 import TestsPage from './components/pages/TestsPage'
 import HomePage from './components/pages/HomePage'
 
-function App() {
+export default function App() {
   return (
     <div className='flex flex-col items-center' >
       <HeaderMenu />
@@ -17,5 +17,3 @@ function App() {
     </div>
   )
 }
-
-export default App
