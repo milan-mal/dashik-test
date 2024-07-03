@@ -1,39 +1,20 @@
-import React, { useEffect } from 'react'
-// import { signal, effect } from '@preact/signals-react'
+import React from 'react'
+import { effect } from '@preact/signals-react'
 
 import userService from '../services/users'
 
-// const googleCredential = signal(null)
-
-// const handleStorageChange = () => {
-//   googleCredential.value = JSON.parse(localStorage.getItem('googleCredential'))
-// }
-
 const handleCredentialResponse = (response) => {
-  console.log('handleCredentialResponse is running')
-  console.log('response.body', response.body)
   userService
-    .postUser(response.value)
+    .postUser(response.credential)
     .then(res => {
       localStorage.setItem('USER_GIVEN_NAME', res.userGivenName || null)
     })
     .catch(err => console.log(err))
 }
 
-// effect(() => {
-//   if(googleCredential.value !== null) {
-//     userService
-//       .postUser(googleCredential.value)
-//       .then(res => {
-//         localStorage.setItem('USER_GIVEN_NAME', res.userGivenName || null)
-//       })
-//       .catch(err => console.log(err))
-//   }
-// })
-
 export default function LoginGoogle() {
   
-  useEffect(() => {
+  effect(() => {
     // Load the Sign in with Google script
     const script = document.createElement('script')
     script.src = 'https://accounts.google.com/gsi/client'
@@ -44,8 +25,7 @@ export default function LoginGoogle() {
     // Load the Sign in with Google button and handleCredentialResponse script
     script.onload = () => {
       window.google.accounts.id.initialize({
-        // TODO: change to .env variable
-        client_id: '345551924505-srquoi6jtp37fpven1p11gab6fj5r6qd.apps.googleusercontent.com',
+        client_id: import.meta.env.VITE_GOOGLE_SIGN_IN_ID,
         callback: handleCredentialResponse,
         // use_fedcm_for_prompt: true
       })
@@ -53,20 +33,14 @@ export default function LoginGoogle() {
         document.getElementById('buttonDiv'),
         { theme: 'outline', size: 'medium', shape: 'pill' }
       )
-      window.google.accounts.id.prompt() // also display the One Tap dialog
-    }
-    // const googleButton = document.createElement('script')
-    // googleButton.src = '/src/scripts/googleLoginButton.js'
-    // googleButton.async = true
-    // document.head.appendChild(googleButton)
-  
-    // window.addEventListener('googleCredential', handleStorageChange)  
+      // also display the One Tap dialog
+      // window.google.accounts.id.prompt()
+    } 
     
     return () => {
       document.head.removeChild(script)
-      // window.removeEventListener('googleCredential', handleStorageChange)
     }
-  }, [])
+  })
   
   return (
     <>
