@@ -56,6 +56,11 @@ userRouter.post('/', async (req, res) => {
         userEmail
       })
       const savedUser = await user.save()
+      res.cookie(
+        'auth_token', credential, {
+          httpOnly: true,
+        }
+      )
       res.status(201).json(savedUser)
       //TODO: remove the following - only for debugging purposes
       // await User.deleteOne({ userId: userId })
