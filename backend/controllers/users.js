@@ -56,9 +56,15 @@ userRouter.post('/', async (req, res) => {
         userEmail
       })
       const savedUser = await user.save()
+      // TODO: setup Prod incl. .env
       res.cookie(
         'auth_token', credential, {
           httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax', // Changed from 'strict' to 'lax' for cross-origin
+          maxAge: 3600000, // 1 hour
+          path: '/',
+          domain: 'localhost:3001' // Ensure this matches your domain
         }
       )
       res.status(201).json(savedUser)

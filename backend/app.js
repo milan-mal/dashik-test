@@ -1,6 +1,7 @@
 import express from 'express'
 const app = express()
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose'
 
 import config from './utils/config.js'
@@ -21,7 +22,12 @@ mongoose.connect(config.MONGODB_URI)
     logger.error('error connecting to MongoDB:', error.message)
   })
 
-app.use(cors())
+app.use(cookieParser())
+app.use(cors({
+  // TODO: setup Prod
+  origin: 'http://localhost:5173',
+  credentials: true,
+}))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
