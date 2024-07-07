@@ -16,6 +16,7 @@ export default function TestsPage() {
   const initialTestId = '653c1b5d9043071e5085d008'
 
   useEffect(() => {
+    // TODO: remove from useEffect
     setTimeout(() => {
       testService
         .getTest(initialTestId)
@@ -37,6 +38,7 @@ export default function TestsPage() {
       })
     }
 
+    // TODO: remove from useEffect
     // Check if all questions are answered whenever selectedAnswers or currentQuestionIndex changes
     const answeredQuestionsCount = Object.keys(selectedAnswers).length
     setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
