@@ -8,6 +8,14 @@ import logger from '../utils/logger.js'
 const userRouter = express.Router()
 userRouter.use(express.urlencoded({ extended: true }))
 
+const getDomain = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return process.env.PRODUCTION_DOMAIN
+  }
+  // For development, return null to allow the cookie to be set on localhost
+  return null
+}
+
 userRouter.get('/', async (req, res) => {
   const users = await User
     .find({})
@@ -61,16 +69,16 @@ userRouter.post('/', async (req, res) => {
         'auth_token', credential, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax', // Changed from 'strict' to 'lax' for cross-origin
+          sameSite: 'lax',
           maxAge: 3600000, // 1 hour
           path: '/',
-          domain: 'localhost:3001' // Ensure this matches your domain
+          domain: getDomain()
         }
       )
       res.status(201).json(savedUser)
       //TODO: remove the following - only for debugging purposes
-      // await User.deleteOne({ userId: userId })
-      // logger.info('User removed')
+      await User.deleteOne({ userId: userId })
+      logger.info('User removed')
     } else {
       logger.info('User already exists.')
     }

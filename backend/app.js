@@ -25,7 +25,9 @@ mongoose.connect(config.MONGODB_URI)
 app.use(cookieParser())
 app.use(cors({
   // TODO: setup Prod
-  origin: 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'production'
+    ? process.env.PRODUCTION_DOMAIN  // Frontend domain in production
+    : 'http://localhost:5173',  // Frontend localhost with port in development
   credentials: true,
 }))
 app.use(express.json())
