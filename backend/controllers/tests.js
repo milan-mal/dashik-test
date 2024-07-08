@@ -4,6 +4,8 @@ import Test from '../models/test.js'
 const testRouter = express.Router()
 
 testRouter.get('/', async (req, res) => {
+  const authToken = req.cookies.auth_token
+  console.log('authToken', authToken)
   const tests = await Test.find({})
   res.status(200).json(tests)
 })
