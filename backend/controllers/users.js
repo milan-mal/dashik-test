@@ -80,7 +80,7 @@ userRouter.post('/', async (req, res) => {
       await User.deleteOne({ userId: userId })
       logger.info('User removed')
     } else {
-      logger.info('User already exists.')
+      logger.info('User already exists')
     }
   }
 
@@ -89,6 +89,22 @@ userRouter.post('/', async (req, res) => {
     res.status(500).send('Internal Server Error')
   })
 
+})
+
+//TODO: protect this api for Prod, api-key for the time being
+userRouter.delete('/', async (req, res) => {
+  const apiKey = req.headers['api-key']
+  if(apiKey === process.env.API_KEY) {
+    const user = await User.findOneAndDelete({ userEmail: req.body.userEmail })
+    if(user) {
+      res.status(200).json(user)
+      logger.info('User removed')
+    } else {
+      res.status(404).send('User not found')
+    }
+  } else {
+    res.status(401).send('Unauthorized')
+  }
 })
 
 export default userRouter

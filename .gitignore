@@ -13,6 +13,9 @@ dist
 dist-ssr
 *.local
 
+# Custom
+**/backend/requests/delete_user_200.rest
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

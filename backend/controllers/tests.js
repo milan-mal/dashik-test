@@ -45,7 +45,7 @@ testRouter.get('/:id', async (req, res, next) =>  {
       })
       .catch(error => next(error))
   } else {
-    res.status(401).end()
+    res.status(401).send('User not found')
   }
 })
 
