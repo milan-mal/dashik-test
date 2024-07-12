@@ -6,6 +6,7 @@ import Test from '../models/test.js'
 import User from '../models/user.js'
 import logger from '../utils/logger.js'
 
+// Verifies auth token from Cookies. Returns User object or null.
 async function verify(authToken) {
   const client = new OAuth2Client()
   const ticket = await client.verifyIdToken({

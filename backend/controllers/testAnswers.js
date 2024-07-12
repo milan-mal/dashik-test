@@ -6,15 +6,30 @@ import TestAnswer from '../models/testAnswer.js'
 import User from '../models/user.js'
 import logger from '../utils/logger.js'
 
-const testAnswerRouter = express.Router()
-
-const getTokenFrom = req => {
-  const authorization = req.get('authorization')
-  if (authorization?.startsWith('Bearer ')){
-    return authorization.replace('Bearer ', '')
+// Verifies auth token from Cookies. Returns User object or null.
+async function verify(authToken) {
+  const client = new OAuth2Client()
+  const ticket = await client.verifyIdToken({
+    idToken: authToken,
+    audience: process.env.GOOGLE_SIGN_IN_ID,
+  })
+    .catch(error => {
+      logger.error('Error while verifying token', error)
+      return null
+    })
+  const payload = ticket.getPayload()
+  const userId = payload['sub']
+  const existingUser = await User.findOne({ userId: userId })
+  if (existingUser) {
+    logger.info(`User "${userId}" exist in the database.`)
+    return existingUser
+  } else {
+    logger.info(`User "${userId}" does not exist in the database.`)
+    return null
   }
-  return null
 }
+
+const testAnswerRouter = express.Router()
 
 testAnswerRouter.get('/', async (req, res) => {
   const testAnswers = await TestAnswer
@@ -24,24 +39,12 @@ testAnswerRouter.get('/', async (req, res) => {
 })
 
 testAnswerRouter.post('/', async (req, res) => {
-  const authClient = new OAuth2Client()
-  const ticket = await authClient.verifyIdToken({
-    idToken: getTokenFrom(req),
-    audience: process.env.GOOGLE_SIGN_IN_ID,
-  })
-    .catch(error => {
-      logger.error(error)
-      res.status(401).json({ error: 'token invalid' })
-      return
-    })
+  const currentUser = await verify(req.cookies.auth_token)
 
-  const userId = ticket.getUserId()
-  const user = await User.findOne({ userId: userId })
-  logger.info('user', user)
-  if(!user) {
-    res.status(401).json({ error: 'user not found' })
+  if(!currentUser) {
+    res.status(401).json({ error: 'currentUser not found' })
   }
-  const userSystemId = user._id
+  const userSystemId = currentUser._id
   logger.info('userSystemId', userSystemId)
 
   const testAnswer = new TestAnswer({
