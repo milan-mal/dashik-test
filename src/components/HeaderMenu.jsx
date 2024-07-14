@@ -42,7 +42,7 @@ export default function HeaderMenu() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img width="47" height="40" className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <img className="h-10 w-auto" src="/src/assets/favicon.svg" alt="logo" />
           </a>
         </div>
         <div className="flex lg:hidden">
