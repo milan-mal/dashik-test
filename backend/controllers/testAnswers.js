@@ -42,7 +42,7 @@ testAnswerRouter.post('/', async (req, res) => {
   const currentUser = await verify(req.cookies.auth_token)
 
   if(!currentUser) {
-    res.status(401).json({ error: 'currentUser not found' })
+    res.status(404).end()
   }
   const userSystemId = currentUser._id
   logger.info('userSystemId', userSystemId)
