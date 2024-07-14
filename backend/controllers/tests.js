@@ -13,6 +13,13 @@ async function verify(authToken) {
     idToken: authToken,
     audience: process.env.GOOGLE_SIGN_IN_ID,
   })
+    .catch(error => {
+      logger.error('Error while verifying token', error)
+      return null
+    })
+  if(!ticket) {
+    return null
+  }
   const payload = ticket.getPayload()
   const userId = payload['sub']
   const existingUser = await User.findOne({ userId: userId })

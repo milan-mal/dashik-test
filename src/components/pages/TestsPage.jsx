@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import testService from '../../services/tests'
 import TestQuestion from '../TestQuestion'
 import Pagination from '../Pagination'
@@ -9,7 +9,10 @@ export default function TestsPage() {
   const [currentTest, setCurrentTest] = useState({})
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [questionCount, setQuestionCount] = useState(0)
-  const [selectedAnswers, setSelectedAnswers] = useState({})  //TODO: change to localStorage
+  const [selectedAnswers, setSelectedAnswers] = useState(() => {
+    const savedAnswers = localStorage.getItem('selectedAnswers')
+    return savedAnswers ? JSON.parse(savedAnswers) : []
+  })
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
   const scrollPositionRef = useRef(null)
 
@@ -44,13 +47,28 @@ export default function TestsPage() {
     setAllQuestionsAnswered(answeredQuestionsCount === questionCount)
   }, [currentQuestionIndex, selectedAnswers, questionCount])
 
+  useEffect(() => {
+    localStorage.setItem('selectedAnswers', JSON.stringify(selectedAnswers))
+  }, [selectedAnswers])
+
   const getCurrentQuestion = () => {
     if( currentTest.questions ){
       const currentQuestion = currentTest.questions[currentQuestionIndex]
+      
+      // Find the selected answer for the current question
+      const selectedAnswer = selectedAnswers.find(
+        answer => answer.questionId === currentQuestion.questionId
+      )
+      console.log('currentQuestion.questionId', currentQuestion.questionId)
+      console.log('selectedAnswer', selectedAnswer)
+      // Get the answerId if a selected answer exists, otherwise undefined
+      const selectedAnswerId = selectedAnswer ? selectedAnswer.selectedAnswerId : undefined
+      console.log('selectedAnswerId', selectedAnswerId)
+
       return (
         <>
           <Pagination questionCount={questionCount} currentQuestionIndex={currentQuestionIndex} handleChangeQuestion={handleChangeQuestion} />
-          <TestQuestion questionData={currentQuestion} handleChangeAnswer={handleChangeAnswer} selectedAnswerId={selectedAnswers[currentQuestion.questionId]} />
+          <TestQuestion questionData={currentQuestion} handleChangeAnswer={handleChangeAnswer} selectedAnswerId={selectedAnswerId} />
           <ButtonConfirm allQuestionsAnswered={allQuestionsAnswered} />
         </>
       )
@@ -66,19 +84,21 @@ export default function TestsPage() {
     setCurrentQuestionIndex(newQuestionIndex)
   }
 
-  const handleChangeAnswer = (selectedQuestionId, selectedAnswerId) => {
+  const handleChangeAnswer = useCallback((questionId, selectedAnswerId) => {
     scrollPositionRef.current = window.scrollY
     console.log('Captured scroll position before changing answer:', scrollPositionRef.current)
     
-    selectedAnswers[selectedQuestionId] = selectedAnswerId
-    setSelectedAnswers((prevSelectedAnswers) => ({
-      ...prevSelectedAnswers, [selectedQuestionId]: selectedAnswerId,
-    }))
-    localStorage.setItem('selectedAnswers', JSON.stringify(selectedAnswers))
-    console.log('selectedAnswers', JSON.stringify(selectedAnswers))
-  }
-
-  console.log('TestPage rendered')
+    setSelectedAnswers(prevAnswers => {
+      const updatedAnswers = prevAnswers.filter(
+        answer => answer.questionId !== questionId
+      )
+      updatedAnswers.push({ questionId, selectedAnswerId })
+      return updatedAnswers
+    })
+  }, [])
+  
+  console.log('--- TestPage rendered ---')
+  console.log('selectedAnswers', JSON.stringify(selectedAnswers))
   
   return (
     <div className="bg-white w-full">
